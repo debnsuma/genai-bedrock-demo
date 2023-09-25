@@ -57,7 +57,7 @@ class App extends Component {
   render() {
     return (
       <Container className='p-5' id='container' name='container'>
-        <h1> Welcome to Stable Diffusion AI</h1>
+        <h1> Welcome to the new world of Machine Learning powered by Amazon Bedrock</h1>
         <Form onSubmit={this.handleSubmit}>
           <Form.Group className='mb-3' controlId='formBasicEmail'>
             <Form.Label>Enter Text to convert Image</Form.Label>
