@@ -1,4 +1,3 @@
-//https://q45f9ormi0.execute-api.us-east-1.amazonaws.com/test/genai
 
 const { createProxyMiddleware } = require('http-proxy-middleware');
 const proxy = {
