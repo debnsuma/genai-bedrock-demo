@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { Component } from 'react';
+import './App.css';
 
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -54,13 +55,14 @@ class App extends Component {
         console.log(error);
       });
   };
+  
   render() {
     return (
-      <Container className='p-5' id='container' name='container'>
-        <h1> Welcome to the new world of machine learning powered by Amazon Bedrock</h1>
+      <Container className='p-5 container' id='container' name='container'>
+        <h1>Unleashing Machine Learning with Amazon Bedrock</h1>
         <Form onSubmit={this.handleSubmit}>
           <Form.Group className='mb-3' controlId='formBasicEmail'>
-            <Form.Label>Your Words, Our Canvas: Enter Text to Create Image!</Form.Label>
+            <Form.Label className='form-label'>Your Words, Our Canvas: Enter Text to Create Image!</Form.Label>
             <Form.Control
               type='text'
               placeholder='Enter text to convert image'
