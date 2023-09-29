@@ -59,7 +59,7 @@ class App extends Component {
   render() {
     return (
       <Container className='p-5 container' id='container' name='container'>
-        <h1>Unleashing Machine Learning with Amazon Bedrock</h1>
+        <h1>Unleashing Machine Learning with Amazon Bedrock (WiP)</h1>
         <Form onSubmit={this.handleSubmit}>
           <Form.Group className='mb-3' controlId='formBasicEmail'>
             <Form.Label className='form-label'>Your Words, Our Canvas: Enter Text to Create Image!</Form.Label>
