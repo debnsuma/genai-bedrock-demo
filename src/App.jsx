@@ -13,6 +13,7 @@ class App extends Component {
     isLoadingVisible: false,
     val: '',
     imgSrc: '',
+    style_preset: 'photographic'  // Default to photographic
   };
 
   showLoading = () => {
@@ -23,19 +24,22 @@ class App extends Component {
     this.setState({ isLoadingVisible: false });
   };
 
+  handleChange = (e) => {
+    this.setState({
+      style_preset: e.target.value
+    });
+  };
+
   handleSubmit = (e) => {
     e.preventDefault();
     this.showLoading();
 
-    console.log(prompt);
-    console.log(process.env.NODE_ENV);
+    const api = process.env.NODE_ENV === 'development' ? 'test/genai' : 'https://q45f9ormi0.execute-api.us-east-1.amazonaws.com/test/genai';
+    const data = { 
+      data: e.target.searchQuery.value,
+      style_preset: this.state.style_preset 
+    };
 
-    const api =
-      process.env.NODE_ENV === 'development'
-        ? 'test/genai'
-        : 'https://q45f9ormi0.execute-api.us-east-1.amazonaws.com/test/genai';
-    const data = { data: e.target.searchQuery.value };
-    console.log(data);
     axios({
       method: 'POST',
       data: JSON.stringify(data),
@@ -43,9 +47,7 @@ class App extends Component {
       url: api,
     })
       .then((response) => {
-        console.log(response);
         this.setState({ imgSrc: response.data.body });
-
         setTimeout(() => {
           this.hideLoading();
           this.setState({ val: '' });
@@ -59,7 +61,7 @@ class App extends Component {
   render() {
     return (
       <Container className='p-5 container' id='container' name='container'>
-        <h1>Unleashing Machine Learning with Amazon Bedrock (WiP)</h1>
+        <h1>Unleashing Machine Learning with Amazon Bedrock</h1>
         <Form onSubmit={this.handleSubmit}>
           <Form.Group className='mb-3' controlId='formBasicEmail'>
             <Form.Label className='form-label'>Your Words, Our Canvas: Enter Text to Create Image!</Form.Label>
@@ -75,32 +77,57 @@ class App extends Component {
             <Form.Text className='text-muted'>
               We'll sketch, stretch, and kvetch until your image is a fetching fetch
             </Form.Text>
+
+            {/* Title for Radio buttons */}
+            <p className="mt-3 font-weight-bold style-title">Select your style:</p>
+
+            {/* Radio buttons horizontally aligned with some styling */}
+            <div className="d-flex justify-content-between">
+              <Form.Check
+                inline
+                type='radio'
+                label='photographic'
+                value='photographic'
+                name='styleOptions'
+                checked={this.state.style_preset === 'photographic'}
+                onChange={this.handleChange}
+                className='fancy-radio'
+              />
+              <Form.Check
+                inline
+                type='radio'
+                label='digital-art'
+                value='digital-art'
+                name='styleOptions'
+                checked={this.state.style_preset === 'digital-art'}
+                onChange={this.handleChange}
+                className='fancy-radio'
+              />
+              <Form.Check
+                inline
+                type='radio'
+                label='cinematic'
+                value='cinematic'
+                name='styleOptions'
+                checked={this.state.style_preset === 'cinematic'}
+                onChange={this.handleChange}
+                className='fancy-radio'
+              />
+            </div>
+
           </Form.Group>
-          <Button
-            variant='primary'
-            type='submit'
-            className='btn btn-primary btn-large centerButton'
-          >
+
+          <Button variant='primary' type='submit' className='btn btn-primary btn-large centerButton'>
             Submit
           </Button>
 
-          <Image
-            id='myImage'
-            className='img-fluid shadow-4'
-            src={this.state.imgSrc}
-          />
+          <Image id='myImage' className='img-fluid shadow-4' src={this.state.imgSrc} />
         </Form>
+
         {this.state.isLoadingVisible && (
           <div id='backdrop'>
             <Button variant='primary' disabled>
-              <Spinner
-                target='container'
-                as='span'
-                animation='grow'
-                size='sm'
-                role='status'
-                aria-hidden='true'
-              />
+              <Spinner as='span' animation='grow' size='sm' role='status' aria-hidden='true' />
               Loading...
             </Button>
           </div>
